@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Application
-Terminal=true
+Terminal=false
 Name=Guitar Pro 8
-Icon=~/wol/Guitar_Pro_8/icon.png
-Exec=~/wol/Guitar_Pro_8/startup.sh
+Icon=/home/nikob/wol/Guitar_Pro_8/icon.png
+Exec=/home/nikob/wol/Guitar_Pro_8/startup.sh
+Comment=Run Guitar Pro 8 under Wine
+Categories=AudioVideo;Music;
