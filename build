@@ -15,6 +15,14 @@ cp -f "$REPO_DIR/startup" "$PREFIX/"
 cp -f "$REPO_DIR/icon.png" "$PREFIX/"
 cp -f "$REPO_DIR/guitarpro.desktop" "$DESKTOP/"
 
+# Expand $HOME in .desktop file to absolute path
+DESKTOP_FILE="$DESKTOP/guitarpro.desktop"
+REAL_HOME="$HOME"
+
+sed -i "s|Icon=\$HOME|Icon=$REAL_HOME|g" "$DESKTOP_FILE"
+sed -i "s|Exec=\$HOME|Exec=$REAL_HOME|g" "$DESKTOP_FILE"
+
+
 # Download Guitar Pro 8 installer
 cd "$PREFIX"
 if [ ! -f guitar-pro-8-setup.exe ]; then
