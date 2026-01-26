@@ -11,5 +11,5 @@ For any request or problem open an issue
 To install, run:
 
 ```bash
-bash <(wget -qO- https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install.sh)
+bash <(wget -qO- https://nikoboinftb.github.io/sh/gp8/install)
 ```

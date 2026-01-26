@@ -11,7 +11,7 @@ mkdir -p "$PREFIX"
 
 # Copy
 echo "Updating startup scripts and icon..."
-cp -f "$REPO_DIR/startup.sh" "$PREFIX/"
+cp -f "$REPO_DIR/startup" "$PREFIX/"
 cp -f "$REPO_DIR/icon.png" "$PREFIX/"
 cp -f "$REPO_DIR/guitarpro.desktop" "$DESKTOP/"
 

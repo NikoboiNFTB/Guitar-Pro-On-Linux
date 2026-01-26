@@ -28,9 +28,9 @@ fi
 
 # Move into repo and run build
 cd "$REPO_DIR"
-bash build.sh
+bash build
 
 echo
 echo "Installation complete!"
 echo "You can launch Guitar Pro 8 via your Desktop icon or:"
-echo "$HOME/Applications/Windows/Guitar-Pro-8/startup.sh"
+echo "$HOME/Applications/Windows/Guitar-Pro-8/startup"
