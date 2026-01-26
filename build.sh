@@ -28,8 +28,12 @@ if [ ! -d "$PREFIX/drive_c" ]; then
     WINEARCH=win64 WINEPREFIX="$PREFIX" winetricks -q win7 corefonts
 fi
 
-# Install Guitar Pro 8
-echo "Launching Guitar Pro 8 installer..."
-WINEARCH=win64 WINEPREFIX="$PREFIX" wine "$PREFIX/guitar-pro-8-setup.exe"
+# Install Guitar Pro 8 but check if GP8 is already installed
+if [ ! -f "$PREFIX/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe" ]; then
+    echo "Guitar Pro 8 not found. Installing..."
+    WINEARCH=win64 WINEPREFIX="$PREFIX" wine "$PREFIX/guitar-pro-8-setup.exe"
+else
+    echo "Guitar Pro 8 is already installed. Skipping installer."
+fi
 
 echo "Guitar Pro 8 setup finished!"
