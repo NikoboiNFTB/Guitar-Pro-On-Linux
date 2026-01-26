@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-REPO_DIR="$HOME/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
-PREFIX="$HOME/wol/Guitar_Pro_8"
+REPO_DIR="$HOME/GitHub/Windows-On-Linux/Guitar-Pro-On-Linux"
+PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
 DESKTOP="$HOME/Desktop"
 
 # Ensure directories exist

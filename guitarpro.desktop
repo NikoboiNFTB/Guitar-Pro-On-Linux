@@ -2,7 +2,7 @@
 Type=Application
 Terminal=false
 Name=Guitar Pro 8
-Icon=/home/nikob/wol/Guitar_Pro_8/icon.png
-Exec=/home/nikob/wol/Guitar_Pro_8/startup.sh
+Icon=$HOME/Applications/Windows/Guitar-Pro-8/icon.png
+Exec=$HOME/Applications/Windows/Guitar-Pro-8/startup.sh
 Comment=Run Guitar Pro 8 under Wine
 Categories=AudioVideo;Music;
