@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 set -e
 
-REPO_DIR="$HOME/GitHub/Windows-On-Linux/Guitar-Pro-On-Linux"
+REPO_DIR="$HOME/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
 PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
 DESKTOP="$HOME/Desktop"
 
 # Ensure directories exist
 mkdir -p "$PREFIX"
 
-# Copy startup script and icon
-cp "$REPO_DIR/startup.sh" "$PREFIX/"
-cp "$REPO_DIR/icon.png" "$PREFIX/"
-
-# Copy .desktop to desktop
-cp "$REPO_DIR/guitarpro.desktop" "$DESKTOP/"
+# Copy
+echo "Updating startup scripts and icon..."
+cp -f "$REPO_DIR/startup.sh" "$PREFIX/"
+cp -f "$REPO_DIR/icon.png" "$PREFIX/"
+cp -f "$REPO_DIR/guitarpro.desktop" "$DESKTOP/"
 
 # Download Guitar Pro 8 installer
 cd "$PREFIX"
