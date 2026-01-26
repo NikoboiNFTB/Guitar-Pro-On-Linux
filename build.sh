@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -e
 
 REPO_DIR="$HOME/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"

@@ -8,12 +8,8 @@ For any request or problem open an issue
 
 ## Usage
 
-Run:
+To install, run:
 
 ```bash
-mkdir -p $HOME/GitHub/NikoboiNFTB
-cd $HOME/GitHub/NikoboiNFTB
-git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux
-cd Guitar-Pro-On-Linux
-bash build.sh
+bash <(wget -qO- https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install.sh)
 ```

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Definitions
+NIKOB_DIR="$HOME/GitHub/NikoboiNFTB"
+REPO_DIR="$HOME/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
+
+# Check that $HOME is setup properly.
+if [ -z "$HOME" ]; then
+    echo "HOME variable not set!"
+    exit 1
+fi
+
+# Make and CD to my GitHub directory.
+mkdir -p "$HOME/GitHub/NikoboiNFTB"
+cd "$HOME/GitHub/NikoboiNFTB"
+
+# Clone the fork if it doesn't exist yet
+if [ ! -d "$REPO_DIR/.git" ]; then
+    echo "Cloning repository..."
+    git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux "$REPO_DIR"
+else
+    echo "Repository already exists, updating..."
+    cd "$REPO_DIR"
+    git pull
+fi
+
+# Move into repo and run build
+cd "$REPO_DIR"
+bash build.sh
+
+echo
+echo "Installation complete!"
+echo "You can launch Guitar Pro 8 via your Desktop icon or:"
+echo "$HOME/Applications/Windows/Guitar-Pro-8/startup.sh"
