@@ -4,7 +4,7 @@ set -e
 
 # Definitions
 NIKOB_DIR="$HOME/GitHub/NikoboiNFTB"
-REPO_DIR="$HOME/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
+REPO_DIR="$NIKOB_DIR/Guitar-Pro-On-Linux"
 
 # Check that $HOME is setup properly.
 if [ -z "$HOME" ]; then
@@ -12,9 +12,57 @@ if [ -z "$HOME" ]; then
     exit 1
 fi
 
+REQUIRED_CMDS=(
+  bash
+  wget
+  wine
+  winetricks
+  sed
+  cp
+  mkdir
+  git
+)
+
+MISSING=()
+
+for cmd in "${REQUIRED_CMDS[@]}"; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    MISSING+=("$cmd")
+  fi
+done
+
+if [ "${#MISSING[@]}" -ne 0 ]; then
+  echo "❌ Missing required applications:"
+  for cmd in "${MISSING[@]}"; do
+    echo "  - $cmd"
+  done
+  echo
+
+  PKGS="${MISSING[*]}"
+
+  echo "Install the missing dependencies using your package manager:"
+  echo
+  echo "Debian / Ubuntu:"
+  echo "  sudo apt update && sudo apt install -y $PKGS"
+  echo
+  echo "Arch / Manjaro:"
+  echo "  sudo pacman -S $PKGS"
+  echo
+  echo "Fedora:"
+  echo "  sudo dnf install $PKGS"
+  echo
+  echo "openSUSE:"
+  echo "  sudo zypper install $PKGS"
+  echo
+  echo "After installing them, re-run this script."
+  exit 1
+fi
+
+echo "✅ All required applications are installed."
+
 # Make and CD to my GitHub directory.
-mkdir -p "$HOME/GitHub/NikoboiNFTB"
-cd "$HOME/GitHub/NikoboiNFTB"
+mkdir -p "$NIKOB_DIR"
+cd "$NIKOB_DIR"
 
 # Clone the fork if it doesn't exist yet
 if [ ! -d "$REPO_DIR/.git" ]; then
@@ -32,5 +80,6 @@ bash build
 
 echo
 echo "Installation complete!"
-echo "You can launch Guitar Pro 8 via your Desktop icon or:"
+echo "You can launch Guitar Pro 8 via the Desktop icon or:"
 echo "$HOME/Applications/Windows/Guitar-Pro-8/startup"
+echo "WARNING: Cinnamon (and likely other DE) app menu entry does **not** work as of $(date)."
