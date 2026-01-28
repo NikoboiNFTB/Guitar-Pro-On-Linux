@@ -11,7 +11,7 @@ For any request or problem open an issue
 To install, run:
 
 ```bash
-bash <(wget -qO- https://nikoboinftb.github.io/sh/gp8/install)
+bash <(wget -qO- https://nikoboinftb.github.io/shell/gp8/install)
 ```
 
 ## Updating
