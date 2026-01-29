@@ -1,8 +1,10 @@
-# Guitar Pro 8 On Linux
+⚠️ **ALPHA BUILD** ⚠️
 
-This is the repository on the shell script to install Guitar Pro 8 on linux through Wine.
+# *Guitar Pro 8* On Linux
 
-Very simple script since Guitar Pro 8 requires only corefonts to run properly on Wine.
+This is the repository on the shell script to install *Guitar Pro 8* on linux through Wine.
+
+Very simple script since *Guitar Pro 8* requires only corefonts to run properly on Wine.
 
 For any request or problem open an issue
 
@@ -16,7 +18,7 @@ bash <(wget -qO- https://nikoboinftb.github.io/shell/gp8/install)
 
 ## Updating
 
-I will eventually make the install script automatically reset the 7 day trial.
+Running `build` or the command above again will re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
 
 ## Contributing
 
@@ -44,9 +46,9 @@ I don't know what LICENSE this is under. The original repository is LICENSE-less
 
 2. **User Responsibility**
 
-    You are responsible for obtaining a **legally licensed copy of Guitar Pro 8**. This project does **not distribute Guitar Pro** or any other proprietary software.
+    You are responsible for obtaining a **legally licensed copy of *Guitar Pro 8***. This project does **not distribute Guitar Pro** or any other proprietary software.
 
-    Guitar Pro 8 is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
+    *Guitar Pro 8* is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
 
 3. **No Warranty**
 
