@@ -59,3 +59,6 @@ else
 fi
 
 echo "Guitar Pro 8 setup finished!"
+
+sed -i "s|Icon=$REAL_HOME|Icon=\$HOME|g" "$DESKTOP_FILE"
+sed -i "s|Exec=$REAL_HOME|Exec=\$HOME|g" "$DESKTOP_FILE"
