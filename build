@@ -31,7 +31,6 @@ sed -i "s|Icon=\$HOME|Icon=$REAL_HOME|g" "$DESKTOP_FILE"
 sed -i "s|Exec=\$HOME|Exec=$REAL_HOME|g" "$DESKTOP_FILE"
 
 # Replace broken default Wine shortcuts with working ones
-rm -rf "$HOME/.local/share/applications/wine/Programs/Arobas Music"
 rm -f "$HOME/.local/share/applications/Guitar Pro 8.desktop"
 rm -f "$DESKTOP/Guitar Pro 8.desktop"
 rm -f "$DESKTOP/guitarpro.desktop"
@@ -78,3 +77,7 @@ echo "Guitar Pro 8 setup finished!"
 # Replace your actual home with $HOME in the desktop file
 sed -i "s|Icon=$REAL_HOME|Icon=\$HOME|g" "$DESKTOP_FILE"
 sed -i "s|Exec=$REAL_HOME|Exec=\$HOME|g" "$DESKTOP_FILE"
+
+rm -fr "$APPLICATIONS/wine/Programs/Arobas Music"
+rm -rf "$HOME/.local/share/applications/wine/Programs/Arobas Music"
+rm -rf "$DESKTOP/Guitar Pro 8.desktop"
