@@ -2,11 +2,13 @@
 
 set -e
 
+# Definitions
 REPO_DIR="$HOME/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
 PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
 DESKTOP="$HOME/Desktop"
 APPLICATIONS="$HOME/.local/share/applications"
 
+# Keep the installer
 mv "$PREFIX/guitar-pro-8-setup.exe" "$REPO_DIR/guitar-pro-8-setup.exe"
 rm -rf "$PREFIX"
 mkdir -p "$PREFIX"
@@ -17,8 +19,27 @@ DESKTOP_FILE="$REPO_DIR/guitarpro.desktop"
 APPLICATIONS_FILE="$APPLICATIONS/guitarpro.desktop"
 REAL_HOME="$HOME"
 
+# Ensure $HOME exists
+if [ -z "$HOME" ]; then
+    echo "HOME variable not set!"
+    exit 1
+fi
+
+
+# Replace $HOME with your actual home in the desktop file
 sed -i "s|Icon=\$HOME|Icon=$REAL_HOME|g" "$DESKTOP_FILE"
 sed -i "s|Exec=\$HOME|Exec=$REAL_HOME|g" "$DESKTOP_FILE"
+
+# Replace broken default Wine shortcuts with working ones
+rm -rf "$HOME/.local/share/applications/wine/Programs/Arobas Music"
+rm -f "$HOME/.local/share/applications/Guitar Pro 8.desktop"
+rm -f "$DESKTOP/Guitar Pro 8.desktop"
+rm -f "$DESKTOP/guitarpro.desktop"
+rm -f "$APPLICATIONS/Guitar Pro 8.desktop"
+rm -f "$APPLICATIONS/guitarpro.desktop"
+cp "$REPO_DIR/guitarpro.desktop" "$HOME/.local/share/applications/guitarpro.desktop"
+chmod +x "$HOME/.local/share/applications/guitarpro.desktop"
+
 
 # Copy
 echo "Updating startup scripts and icon..."
@@ -28,12 +49,6 @@ cp -f "$REPO_DIR/favicon.ico" "$PREFIX/"
 cp -f "$REPO_DIR/guitarpro.desktop" "$DESKTOP/guitarpro.desktop"
 chmod +x "$DESKTOP/guitarpro.desktop"
 
-# Replace broken default Wine shortcuts with working ones
-rm -rf "$HOME/.local/share/applications/wine/Programs/Arobas Music"
-rm -f "$HOME/.local/share/applications/Guitar Pro 8.desktop"
-rm -f "$DESKTOP/Guitar Pro 8.desktop"
-cp "$REPO_DIR/guitarpro.desktop" "$HOME/.local/share/applications/guitarpro.desktop"
-chmod +x "$HOME/.local/share/applications/guitarpro.desktop"
 
 
 # Download Guitar Pro 8 installer
@@ -60,5 +75,6 @@ fi
 
 echo "Guitar Pro 8 setup finished!"
 
+# Replace your actual home with $HOME in the desktop file
 sed -i "s|Icon=$REAL_HOME|Icon=\$HOME|g" "$DESKTOP_FILE"
 sed -i "s|Exec=$REAL_HOME|Exec=\$HOME|g" "$DESKTOP_FILE"
