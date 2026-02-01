@@ -6,7 +6,7 @@ Install *Guitar Pro 8* on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
-Another note: This is built and tested for **Linux Mint / Cinnamon**. Open up an issue for other distros.
+Another note: This is built and tested for **Linux Mint / Cinnamon**. Other distros are not officially supported, but feel free to open up an issue for other distros.
 
 ## Usage
 
