@@ -6,7 +6,13 @@ Install *Guitar Pro 8* on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
-## Installation
+Another note: This is built and tested for **Linux Mint / Cinnamon**. Open up an issue for other distros.
+
+## Usage
+
+How to use the scripts.
+
+### Installation
 
 Run the [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install) script.
 
@@ -18,15 +24,33 @@ bash <(wget -qO- https://nikoboinftb.github.io/shell/gp8/install)
 
 It will clone/update this repository locally, allowing for easy file copying.
 
-The `install` script runs the `build` script automatically, which actually builds the app.
+The [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install) script runs the [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) script automatically, which actually builds the app.
 
-## Updating
+### Updating
 
-Running `build` or the command above again will fully re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
+Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
 
-## Reset
+### Reset
 
-The `reset` script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (*wink*).
+The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (*wink, wink*).
+
+This repo also includes a [`reset.bat`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset.bat), for Windows.
+
+## Bonus Tip
+
+You can set the desktop icon to run both the reset and the startup scripts. Simply change:
+
+```text
+Exec=$HOME/Applications/Windows/Guitar-Pro-8/startup
+```
+
+to:
+
+```text
+Exec=$HOME/Applications/Windows/Guitar-Pro-8/reset-and-startup
+```
+
+Note. It will not literally say "$HOME", that does not work.
 
 ## Contributing
 

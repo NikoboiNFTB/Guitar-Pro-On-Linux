@@ -69,6 +69,10 @@ echo "Updating startup scripts and icon..."
 
 cp -f "$REPO_DIR/startup" "$PREFIX/startup"
 chmod +x "$PREFIX/startup"
+cp -f "$REPO_DIR/reset" "$PREFIX/reset"
+chmod +x "$PREFIX/reset"
+cp -f "$REPO_DIR/reset-and-startup" "$PREFIX/reset-and-startup"
+chmod +x "$PREFIX/reset-and-startup"
 
 cp -f "$REPO_DIR/icons/Guitar_Pro_8_icon.png" "$PREFIX/"
 
