@@ -2,14 +2,14 @@
 
 # *Guitar Pro 8* On Linux
 
-This is the repository on the shell script to install *Guitar Pro 8* on linux through Wine.
-
-Very simple script since *Guitar Pro 8* requires only corefonts to run properly on Wine.
-
+Install *Guitar Pro 8* on Linux through Wine and Wineget 
 For any request or problem open an issue
 
-## Usage
+Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
+## Scripts
+
+### [`install`]()
 To install, run:
 
 ```bash

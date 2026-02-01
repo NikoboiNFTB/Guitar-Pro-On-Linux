@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${HOME:?HOME not set}"
+
+PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
+WINEPREFIX="$PREFIX"
+USER_DIR="$PREFIX/drive_c/users/$USER"
+
+echo "Purging Guitar Pro 8 user state..."
+
+# Registry
+echo "Removing Arobas Music registry keys..."
+wine reg delete "HKCU\\Software\\Arobas Music" /f >/dev/null 2>&1 || true
+
+# Local AppData
+echo "Removing Local AppData..."
+rm -rf \
+  "$USER_DIR/Local Settings/Application Data/Arobas Music"
+
+# Roaming AppData
+echo "Removing Roaming AppData..."
+rm -rf \
+  "$USER_DIR/Application Data/Arobas Music"
+
+echo "Done. Guitar Pro has been erased from this Wine timeline."
