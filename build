@@ -49,24 +49,6 @@ if [ -f "$INSTALLER_REPO" ]; then
     mv -f "$INSTALLER_REPO" "$INSTALLER_PREFIX"
 fi
 
-# Remove broken Wine shortcuts
-
-echo "Removing broken Wine desktop entries..."
-
-BROKEN_DESKTOP_FILES=(
-    "$DESKTOP_DIR/Guitar Pro 8.desktop"
-    "$DESKTOP_DIR/guitarpro.desktop"
-    "$APPLICATIONS_DIR/Guitar Pro 8.desktop"
-    "$APPLICATIONS_DIR/guitarpro.desktop"
-)
-
-for file in "${BROKEN_DESKTOP_FILES[@]}"; do
-    rm -f "$file"
-done
-
-rm -rf "$APPLICATIONS_DIR/wine/Programs/Arobas Music"
-rm -rf "$DESKTOP_DIR/Guitar Pro 8.desktop"
-
 # Prepare and install custom desktop entry
 
 echo "Installing custom desktop entry..."
@@ -118,3 +100,22 @@ else
 fi
 
 echo "Guitar Pro 8 setup finished."
+
+# Remove broken Wine shortcuts
+
+echo "Removing broken Wine desktop entries..."
+
+BROKEN_DESKTOP_FILES=(
+    "$DESKTOP_DIR/Guitar Pro 8.desktop"
+    "$APPLICATIONS_DIR/Guitar Pro 8.desktop"
+)
+
+# "$DESKTOP_DIR/guitarpro.desktop"
+# "$APPLICATIONS_DIR/guitarpro.desktop"
+
+for file in "${BROKEN_DESKTOP_FILES[@]}"; do
+    rm -f "$file"
+done
+
+rm -rf "$APPLICATIONS_DIR/wine/Programs/Arobas Music"
+rm -rf "$DESKTOP_DIR/Guitar Pro 8.desktop"
