@@ -1,24 +1,32 @@
 ⚠️ **ALPHA BUILD** ⚠️
 
-# *Guitar Pro 8* On Linux
+# *Guitar Pro 8* on Linux
 
-Install *Guitar Pro 8* on Linux through Wine and Wineget 
-For any request or problem open an issue
+Install *Guitar Pro 8* on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
-## Scripts
+## Installation
 
-### [`install`]()
+Run the [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install) script.
+
 To install, run:
 
 ```bash
 bash <(wget -qO- https://nikoboinftb.github.io/shell/gp8/install)
 ```
 
+It will clone/update this repository locally, allowing for easy file copying.
+
+The `install` script runs the `build` script automatically, which actually builds the app.
+
 ## Updating
 
-Running `build` or the command above again will re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
+Running `build` or the command above again will fully re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
+
+## Reset
+
+The `reset` script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (*wink*).
 
 ## Contributing
 

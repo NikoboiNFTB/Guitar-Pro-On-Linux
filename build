@@ -70,7 +70,7 @@ echo "Updating startup scripts and icon..."
 cp -f "$REPO_DIR/startup" "$PREFIX/startup"
 chmod +x "$PREFIX/startup"
 
-cp -f "$REPO_DIR/favicon.ico" "$PREFIX/"
+cp -f "$REPO_DIR/icons/Guitar_Pro_8_icon.png" "$PREFIX/"
 
 # Download installer if missing
 
@@ -110,6 +110,7 @@ BROKEN_DESKTOP_FILES=(
     "$APPLICATIONS_DIR/Guitar Pro 8.desktop"
 )
 
+# The .desktop files copied from this repository.
 # "$DESKTOP_DIR/guitarpro.desktop"
 # "$APPLICATIONS_DIR/guitarpro.desktop"
 
