@@ -32,11 +32,9 @@ Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/he
 
 ### Reset
 
-> Worked for a day, then just stopped working. Troubleshooting.
-
 The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (*wink, wink*).
 
-This repo also includes a [`reset.bat`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset.bat), for Windows.
+This repo also includes a [`reset.bat`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset.bat), for Windows users. Because Windows also tends to break a lot.
 
 ## Bonus Tip
 
@@ -58,7 +56,7 @@ Note. It **cannot** literally say "$HOME", that does not work. Use your home dir
 echo "$HOME"
 ```
 
-And use that in place of $HOME.
+And use the output in place of `$HOME`. It also cannot use `~`. The setup script automatically sets `$HOME` to your home directory automatically.
 
 ## Contributing
 
