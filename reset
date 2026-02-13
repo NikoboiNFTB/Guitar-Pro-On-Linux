@@ -2,26 +2,30 @@
 
 set -euo pipefail
 
-: "${HOME:?HOME not set}"
+# Check that $HOME is setup properly.
+if [ -z "$HOME" ]; then
+    echo "HOME variable not set!"
+    exit 1
+fi
 
 PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
-WINEPREFIX="$PREFIX"
 USER_DIR="$PREFIX/drive_c/users/$USER"
 
 echo "Purging Guitar Pro 8 user state..."
 
-# Registry
+# Remove registry keys
 echo "Removing Arobas Music registry keys..."
-wine reg delete "HKCU\\Software\\Arobas Music" /f >/dev/null 2>&1 || true
+WINEPREFIX="$PREFIX" wine reg delete "HKCU\\Software\\Arobas Music" /f >/dev/null 2>&1 || true
+WINEPREFIX="$PREFIX" wine reg delete "HKCU\\Software\\Wow6432Node\\Arobas Music" /f >/dev/null 2>&1 || true
 
-# Local AppData
-echo "Removing Local AppData..."
-rm -rf \
-  "$USER_DIR/Local Settings/Application Data/Arobas Music"
+# Correct AppData paths
+LOCAL_APPDATA="$USER_DIR/AppData/Local/Arobas Music"
+ROAMING_APPDATA="$USER_DIR/AppData/Roaming/Arobas Music"
 
-# Roaming AppData
-echo "Removing Roaming AppData..."
-rm -rf \
-  "$USER_DIR/Application Data/Arobas Music"
+# Remove Local AppData
+[ -d "$LOCAL_APPDATA" ] && { echo "Removing Local AppData..."; rm -rf "$LOCAL_APPDATA"; }
+
+# Remove Roaming AppData
+[ -d "$ROAMING_APPDATA" ] && { echo "Removing Roaming AppData..."; rm -rf "$ROAMING_APPDATA"; }
 
 echo "Done. Guitar Pro 8 config has been reset."
