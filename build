@@ -16,7 +16,7 @@ DESKTOP_DIR="$HOME/Desktop"
 APPLICATIONS_DIR="$HOME/.local/share/applications"
 
 DESKTOP_FILE_REPO="$REPO_DIR/guitarpro.desktop"
-DESKTOP_FILE_DESKTOP="$HOME/Desktop"
+DESKTOP_FILE_DESKTOP="$DESKTOP_DIR/guitarpro.desktop"
 DESKTOP_FILE_APPLICATIONS="$APPLICATIONS_DIR/guitarpro.desktop"
 
 INSTALLER_NAME="guitar-pro-8-setup.exe"
@@ -102,3 +102,4 @@ echo "✅  Guitar Pro 8 setup finished."
 echo "ℹ️  Removing broken Wine desktop entries..."
 rm -f "$DESKTOP_DIR/Guitar Pro 8.desktop" "$APPLICATIONS_DIR/Guitar Pro 8.desktop"
 rm -rf "$APPLICATIONS_DIR/wine/Programs/Arobas Music"
+echo "✅ Broken desktop entries removed!"
