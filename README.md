@@ -19,8 +19,10 @@ Run the [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/
 To install, run:
 
 ```bash
-bash <(wget -qO- https://nikoboinftb.github.io/shell/gp8/install)
+bash <(wget -qO- https://gp8.nikoboi.dev/install)
 ```
+
+>[gp8.nikoboi.dev](gp8.nikoboi.dev) resolves to this repository.
 
 It will clone/update this repository locally, allowing for easy file copying.
 
