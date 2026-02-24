@@ -1,4 +1,4 @@
-⚠️ **ALPHA BUILD** ⚠️
+**BETA BUILD**
 
 # *Guitar Pro 8* on Linux
 
