@@ -22,7 +22,7 @@ To install, run:
 bash <(wget -qO- https://gp8.nikoboi.dev/install)
 ```
 
->[gp8.nikoboi.dev](gp8.nikoboi.dev) resolves to this repository.
+>[gp8.nikoboi.dev](https://gp8.nikoboi.dev/) resolves to this repository.
 
 It will clone/update this repository locally, allowing for easy file copying.
 
