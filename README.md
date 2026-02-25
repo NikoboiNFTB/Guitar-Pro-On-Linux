@@ -1,12 +1,12 @@
 **BETA BUILD**
 
-# *Guitar Pro 8* on Linux
+# Guitar Pro 8 on Linux
 
 Install *Guitar Pro 8* on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
-Another note: This is built and tested for **Linux Mint / Cinnamon**. Other distros are not officially supported, but feel free to open up an issue for other distros.
+Another note: This is built and tested for **Linux Mint / Cinnamon**. Other distros should work but are not officially supported or tested. Feel free to open up an issue for other distros.
 
 ## Usage
 
@@ -27,6 +27,17 @@ bash <(wget -qO- https://gp8.nikoboi.dev/install)
 It will clone/update this repository locally, allowing for easy file copying.
 
 The [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install) script runs the [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) script automatically, which actually builds the app.
+
+### Build
+
+As mentioned, the `build` script is automatically run by the `install` script. It can, however be run from a locally cloned copy of this repository:
+
+```bash
+mkdir -p ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
+git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
+cd ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
+bash build
+```
 
 ### Updating
 
