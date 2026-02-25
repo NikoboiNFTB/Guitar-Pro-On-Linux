@@ -28,6 +28,17 @@ It will clone/update this repository locally, allowing for easy file copying.
 
 The [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install) script runs the [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) script automatically, which actually builds the app.
 
+### Build
+
+As mentioned, the `build` script is automatically run by the `install` script. It can, however be run from a locally cloned copy of this repository:
+
+```bash
+mkdir -p "~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
+git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux "~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
+cd "~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
+bash build
+```
+
 ### Updating
 
 Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
