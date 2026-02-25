@@ -33,9 +33,9 @@ The [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/head
 As mentioned, the `build` script is automatically run by the `install` script. It can, however be run from a locally cloned copy of this repository:
 
 ```bash
-mkdir -p "~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
-git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux "~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
-cd "~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux"
+mkdir -p ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
+git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
+cd ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
 bash build
 ```
 
