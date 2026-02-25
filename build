@@ -76,7 +76,7 @@ cd "$PREFIX"
 if [ ! -f "$INSTALLER_NAME" ]; then
     echo "ℹ️  Downloading Guitar Pro 8 installer..."
     wget -O "$INSTALLER_NAME" \
-        https://download-fr-3.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe
+        https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe
 fi
 
 # Prepare Wine prefix
