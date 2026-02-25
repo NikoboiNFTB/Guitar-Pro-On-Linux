@@ -1,5 +1,7 @@
 **BETA BUILD**
 
+NOTE: The download link seems to have moved. Gotta find it again.
+
 # *Guitar Pro 8* on Linux
 
 Install *Guitar Pro 8* on Linux through Wine and Wineget.
