@@ -2,7 +2,7 @@
 
 # Guitar Pro 8 on Linux
 
-Install *Guitar Pro 8* on Linux through Wine and Wineget.
+Install _Guitar Pro 8_ on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
@@ -22,7 +22,7 @@ To install, run:
 bash <(wget -qO- https://gp8.nikoboi.dev/install)
 ```
 
->[gp8.nikoboi.dev](https://gp8.nikoboi.dev/) resolves to this repository.
+> > [gp8.nikoboi.dev](https://gp8.nikoboi.dev/) resolves to this repository.
 
 It will clone/update this repository locally, allowing for easy file copying.
 
@@ -41,11 +41,11 @@ bash build
 
 ### Updating
 
-Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install *Guitar Pro 8* from scratch and should update all included files from this repository.
+Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install _Guitar Pro 8_ from scratch and should update all included files from this repository.
 
 ### Reset
 
-The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (*wink, wink*).
+The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (_wink, wink_).
 
 This repo also includes a [`reset.bat`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset.bat), for Windows users. Because Windows also tends to break a lot.
 
@@ -93,24 +93,24 @@ I don't know what LICENSE this is under. The original repository is LICENSE-less
 
 1. **No Official Affiliation**
 
-    This project is **not affiliated with, endorsed by, or sponsored by Arobas Music or Guitar Pro**. All trademarks, logos, and software referenced herein remain the property of their respective owners.
+   This project is **not affiliated with, endorsed by, or sponsored by Arobas Music or Guitar Pro**. All trademarks, logos, and software referenced herein remain the property of their respective owners.
 
 2. **User Responsibility**
 
-    You are responsible for obtaining a **legally licensed copy of *Guitar Pro 8***. This project does **not distribute Guitar Pro** or any other proprietary software.
+   You are responsible for obtaining a **legally licensed copy of _Guitar Pro 8_**. This project does **not distribute Guitar Pro** or any other proprietary software.
 
-    *Guitar Pro 8* is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
+   _Guitar Pro 8_ is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
 
 3. **No Warranty**
 
-    This project comes with **no warranty of any kind**, express or implied. The author(s) disclaim all liability for damages, data loss, or system issues resulting from the use of this software or scripts.
+   This project comes with **no warranty of any kind**, express or implied. The author(s) disclaim all liability for damages, data loss, or system issues resulting from the use of this software or scripts.
 
 4. **Use at Your Own Risk**
 
-    Running Wine, downloading installers, and modifying system files may cause unexpected behavior. **Use at your own risk**. The author(s) are not responsible for any problems caused to your system, files, or software environment.
+   Running Wine, downloading installers, and modifying system files may cause unexpected behavior. **Use at your own risk**. The author(s) are not responsible for any problems caused to your system, files, or software environment.
 
 5. **Open Source Components**
 
-    Scripts, templates, and other files included in this repository are released under their respective licenses. Use and modification are subject to those licenses.
+   Scripts, templates, and other files included in this repository are released under their respective licenses. Use and modification are subject to those licenses.
 
 By using this project, you confirm that you understand and accept these terms.
