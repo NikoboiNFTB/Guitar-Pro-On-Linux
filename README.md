@@ -77,11 +77,11 @@ Feel free to fork this repository and submit issues or pull requests if you have
 
 ## Credits
 
-Original repository created by **[Windows-On-Linux](https://github.com/Windows-On-Linux/)**
+Original repository created by [**Windows-On-Linux**](https://github.com/Windows-On-Linux/)
 
-Forked and upgraded by **[Nikoboi](https://github.com/NikoboiNFTB/)**
+Forked and upgraded by [**Nikoboi**](https://github.com/NikoboiNFTB/)
 
-[Disclaimer](#legal-disclaimer) coughed up by **[ChatGPT](https://chatgpt.com/)**
+[Disclaimer](#legal-disclaimer) coughed up by [**ChatGPT**](https://chatgpt.com/)
 
 ## License
 
