@@ -4,8 +4,8 @@ set -euo pipefail
 
 # Check that $HOME is setup properly.
 if [ -z "$HOME" ]; then
-    echo "HOME variable not set!"
-    exit 1
+	echo "HOME variable not set!"
+	exit 1
 fi
 
 PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
@@ -23,9 +23,15 @@ LOCAL_APPDATA="$USER_DIR/AppData/Local/Arobas Music"
 ROAMING_APPDATA="$USER_DIR/AppData/Roaming/Arobas Music"
 
 # Remove Local AppData
-[ -d "$LOCAL_APPDATA" ] && { echo "Removing Local AppData..."; rm -rf "$LOCAL_APPDATA"; }
+[ -d "$LOCAL_APPDATA" ] && {
+	echo "Removing Local AppData..."
+	rm -rf "$LOCAL_APPDATA"
+}
 
 # Remove Roaming AppData
-[ -d "$ROAMING_APPDATA" ] && { echo "Removing Roaming AppData..."; rm -rf "$ROAMING_APPDATA"; }
+[ -d "$ROAMING_APPDATA" ] && {
+	echo "Removing Roaming AppData..."
+	rm -rf "$ROAMING_APPDATA"
+}
 
 echo "Done. Guitar Pro 8 config has been reset."

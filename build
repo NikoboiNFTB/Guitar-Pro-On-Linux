@@ -4,8 +4,8 @@ set -euo pipefail
 
 # Ensure $HOME exists
 if [ -z "$HOME" ]; then
-    echo "❌ HOME variable not set!"
-    exit 1
+	echo "❌ HOME variable not set!"
+	exit 1
 fi
 
 # Definitions
@@ -30,14 +30,14 @@ GP8_EXE="$PREFIX/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe"
 echo "ℹ️  Preserving installer (if present) and wiping Wine prefix..."
 
 if [ -f "$INSTALLER_PREFIX" ]; then
-    mv -f "$INSTALLER_PREFIX" "$INSTALLER_REPO"
+	mv -f "$INSTALLER_PREFIX" "$INSTALLER_REPO"
 fi
 
 rm -rf "$PREFIX"
 mkdir -p "$PREFIX"
 
 if [ -f "$INSTALLER_REPO" ]; then
-    mv -f "$INSTALLER_REPO" "$INSTALLER_PREFIX"
+	mv -f "$INSTALLER_REPO" "$INSTALLER_PREFIX"
 fi
 
 # Prepare and install custom desktop entry
@@ -74,26 +74,26 @@ cp -f "$REPO_DIR/icons/Guitar_Pro_8_icon.png" "$PREFIX/"
 cd "$PREFIX"
 
 if [ ! -f "$INSTALLER_NAME" ]; then
-    echo "ℹ️  Downloading Guitar Pro 8 installer..."
-    wget -O "$INSTALLER_NAME" \
-        https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe
+	echo "ℹ️  Downloading Guitar Pro 8 installer..."
+	wget -O "$INSTALLER_NAME" \
+		https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe
 fi
 
 # Prepare Wine prefix
 
 if [ ! -d "$PREFIX/drive_c" ]; then
-    echo "ℹ️  Initializing Wine prefix..."
-    WINEARCH=win64 WINEPREFIX="$PREFIX" wineboot --init
-    WINEARCH=win64 WINEPREFIX="$PREFIX" winetricks -q win7 corefonts
+	echo "ℹ️  Initializing Wine prefix..."
+	WINEARCH=win64 WINEPREFIX="$PREFIX" wineboot --init
+	WINEARCH=win64 WINEPREFIX="$PREFIX" winetricks -q win7 corefonts
 fi
 
 # Install Guitar Pro 8
 
 if [ ! -f "$GP8_EXE" ]; then
-    echo "ℹ️  Installing Guitar Pro 8..."
-    WINEARCH=win64 WINEPREFIX="$PREFIX" wine "$INSTALLER_PREFIX"
+	echo "ℹ️  Installing Guitar Pro 8..."
+	WINEARCH=win64 WINEPREFIX="$PREFIX" wine "$INSTALLER_PREFIX"
 else
-    echo "ℹ️  Guitar Pro 8 already installed. Skipping installer."
+	echo "ℹ️  Guitar Pro 8 already installed. Skipping installer."
 fi
 
 echo "✅  Guitar Pro 8 setup finished."
