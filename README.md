@@ -1,6 +1,6 @@
 # Guitar Pro 8 on Linux
 
-Install _Guitar Pro 8_ on Linux through Wine and Wineget.
+Install Guitar Pro 8 on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
@@ -39,11 +39,11 @@ bash build
 
 ### Updating
 
-Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install _Guitar Pro 8_ from scratch and should update all included files from this repository.
+Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install Guitar Pro 8 from scratch and should update all included files from this repository.
 
 ### Reset
 
-The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro "breaks" (_wink, wink_).
+The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro 8 "breaks" (_wink_).
 
 This repo also includes a [`reset.bat`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset.bat), for Windows users. Because Windows also tends to break a lot.
 
@@ -100,13 +100,13 @@ This project is licensed under the GNU General Public License V3. See [LICENSE](
 
 1. **No Official Affiliation**
 
-   This project is **not affiliated with, endorsed by, or sponsored by Arobas Music or Guitar Pro**. All trademarks, logos, and software referenced herein remain the property of their respective owners.
+   This project is **not affiliated with, endorsed by, or sponsored by Arobas Music or Guitar Pro 8**. All trademarks, logos, and software referenced herein remain the property of their respective owners.
 
 2. **User Responsibility**
 
-   You are responsible for obtaining a **legally licensed copy of _Guitar Pro 8_**. This project does **not distribute Guitar Pro** or any other proprietary software.
+   You are responsible for obtaining a **legally licensed copy of Guitar Pro 8**. This project does **not distribute Guitar Pro 8** or any other proprietary software.
 
-   _Guitar Pro 8_ is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
+   Guitar Pro 8 is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
 
 3. **No Warranty**
 
