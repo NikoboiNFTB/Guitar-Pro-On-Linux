@@ -89,7 +89,7 @@ echo "WARNING: Cinnamon (and likely other DE) app menu entry does **not** work a
 
 # Hang
 
-KEEP_OPEN=true
+KEEP_OPEN=false
 
 if [ "$KEEP_OPEN" = true ]; then
 	echo
