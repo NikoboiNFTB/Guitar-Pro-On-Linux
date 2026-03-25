@@ -79,13 +79,11 @@ Original repository created by [**Windows-On-Linux**](https://github.com/Windows
 
 Forked and upgraded by [**Nikoboi**](https://github.com/NikoboiNFTB/)
 
-[Legal Disclaimer](#legal-disclaimer) coughed up by [**ChatGPT**](https://chatgpt.com/)
+[License](#license) and [Legal Disclaimer](#legal-disclaimer) coughed up by [**ChatGPT**](https://chatgpt.com/)
 
 ## License
 
-The original repository that was forked is LICENSE-less, which means it is automatically "All Rights Reserved."
-
-This project is licenced under the GNU General Public License V3. See [LICENSE](/LICENSE) for details.
+The original repository forked is LICENSE-less, which means it is automatically "All Rights Reserved."
 
 The only elements used from the original repository are a few minimal commands (Wine prefix initialization and corefonts installation). These are **functional necessities** and fall under the **Merger Doctrine**.
 
@@ -93,6 +91,8 @@ The only elements used from the original repository are a few minimal commands (
 > The Merger Doctrine in copyright law states that when an idea can only be expressed in a limited number of ways, the expression cannot be copyrighted, as this would effectively grant a monopoly over the idea itself. This principle ensures that while unique interpretations can be protected, the underlying ideas remain available for public use.
 
 All other code, scripts, configuration, and structure in this repository are **original work**.
+
+This project is licenced under the GNU General Public License V3. See [LICENSE](/LICENSE) for details.
 
 ## Legal Disclaimer
 
