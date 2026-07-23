@@ -4,7 +4,9 @@ Install Guitar Pro 8 on Linux through Wine and Wineget.
 
 Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
 
-Another note: This is built and tested for **Linux Mint / Cinnamon**. Other distros should work but are not officially supported or tested. Feel free to open up an issue for other distros.
+Another note: This is built and tested for **Linux Mint / Cinnamon**. Other distros should work but are not officially supported or tested. Still, feel free to open up an issue for other distros as well.
+
+The [`/icons/`](/icons/) folder contains a few options for icons.
 
 ## Usage
 
@@ -100,24 +102,26 @@ This project is licensed under the GNU General Public License V3. See [LICENSE](
 
 1. **No Official Affiliation**
 
-   This project is **not affiliated with, endorsed by, or sponsored by Arobas Music or Guitar Pro 8**. All trademarks, logos, and software referenced herein remain the property of their respective owners.
+    This project is **not affiliated with, endorsed by, or sponsored by Arobas Music or Guitar Pro 8**. All trademarks, logos, and software referenced herein remain the property of their respective owners.
 
 2. **User Responsibility**
 
-   You are responsible for obtaining a **legally licensed copy of Guitar Pro 8**. This project does **not distribute Guitar Pro 8** or any other proprietary software.
+    You are responsible for obtaining a **legally licensed copy of Guitar Pro 8**. This project does **not distribute Guitar Pro 8** or any other proprietary software.
 
-   Guitar Pro 8 is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
+    Guitar Pro 8 is downloaded and installed from the official [guitar-pro.com](https://www.guitar-pro.com/) website.
 
 3. **No Warranty**
 
-   This project comes with **no warranty of any kind**, express or implied. The author(s) disclaim all liability for damages, data loss, or system issues resulting from the use of this software or scripts.
+    This project comes with **no warranty of any kind**, express or implied. The author(s) disclaim all liability for damages, data loss, or system issues resulting from the use of this software or scripts.
 
 4. **Use at Your Own Risk**
 
-   Running Wine, downloading installers, and modifying system files may cause unexpected behavior. **Use at your own risk**. The author(s) are not responsible for any problems caused to your system, files, or software environment.
+    Running Wine, downloading installers, and modifying system files may cause unexpected behavior. **Use at your own risk**. The author(s) are not responsible for any problems caused to your system, files, or software environment.
 
 5. **Open Source Components**
 
-   Scripts, templates, and other files included in this repository are released under their respective licenses. Use and modification are subject to those licenses.
+    Scripts, templates, and other files included in this repository are released under their respective licenses. Use and modification are subject to those licenses.
 
 By using this project, you confirm that you understand and accept these terms.
+
+PS. The icons are technically copyrighted work, if your copyright has been infringed, feel free to mail me at [contact@nikoboi.dev](mailto:contact@nikoboi.dev).
