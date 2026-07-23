@@ -90,7 +90,7 @@ The only elements used from the original repository are a few minimal commands (
 > [!NOTE]
 > The Merger Doctrine in copyright law states that when an idea can only be expressed in a limited number of ways, the expression cannot be copyrighted, as this would effectively grant a monopoly over the idea itself. This ensures that while unique interpretations can be protected, the underlying ideas remain available for public use.
 
-All other code, scripts, configuration, and repository structure are **original work**.
+All other code, scripts, configuration, and repository structure are **original work**. (Not the [`/Icons/`](/icons/) folder, however.)
 
 This project is licensed under the GNU General Public License V3. See [LICENSE](/LICENSE) for details.
 
