@@ -15,9 +15,9 @@ PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
 DESKTOP_DIR="$HOME/Desktop"
 APPLICATIONS_DIR="$HOME/.local/share/applications"
 
-DESKTOP_FILE_REPO="$REPO_DIR/guitarpro.desktop"
-DESKTOP_FILE_DESKTOP="$DESKTOP_DIR/guitarpro.desktop"
-DESKTOP_FILE_APPLICATIONS="$APPLICATIONS_DIR/guitarpro.desktop"
+DESKTOP_FILE_REPO="$REPO_DIR/guitar-pro-8.desktop"
+DESKTOP_FILE_DESKTOP="$DESKTOP_DIR/guitar-pro-8.desktop"
+DESKTOP_FILE_APPLICATIONS="$APPLICATIONS_DIR/guitar-pro-8.desktop"
 
 INSTALLER_NAME="guitar-pro-8-setup.exe"
 INSTALLER_REPO="$REPO_DIR/$INSTALLER_NAME"

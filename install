@@ -74,6 +74,11 @@ else
 	git pull
 fi
 
+# Install icons
+mkdir -p "$HOME/.local/share/icons/hicolor"
+cp -r "$REPO_DIR/icons/hicolor/"* "$HOME/.local/share/icons/hicolor/"
+gtk-update-icon-cache -f "$HOME/.local/share/icons/hicolor"
+
 # Move into repo and run build
 cd "$REPO_DIR"
 bash build
