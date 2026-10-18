@@ -1,3 +1,4 @@
+# This file is not used.
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -8,5 +9,3 @@ Terminal=false
 Exec=/usr/local/bin/krita
 Icon=guitar-pro-8
 Categories=AudioVideo;Music;
-
-# This file is note used.
