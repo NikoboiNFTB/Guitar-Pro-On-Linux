@@ -1,8 +1,7 @@
 [Desktop Entry]
 Type=Application
-Terminal=false
 Name=Guitar Pro 8
 Icon=guitar-pro-8
-Exec=$HOME/Applications/Windows/Guitar-Pro-8/startup
-Comment=Run Guitar Pro 8 under Wine
+Comment=Run Guitar Pro 8 under Wine.
 Categories=AudioVideo;Music;
+Terminal=false

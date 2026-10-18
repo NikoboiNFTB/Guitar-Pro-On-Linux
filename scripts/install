@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Check that $HOME is set
+if [ -z "${HOME:-}" ]; then
+	echo "❌ HOME variable not set!"
+	exit 1
+fi
+
+# Check dependencies
+REQUIRED_CMDS=(
+	wget
+	wine
+	wineboot
+	winetricks
+	sed
+	cp
+	mkdir
+	chmod
+	rm
+	mv
+	mktemp
+	gtk-update-icon-cache
+)
+
+MISSING=()
+
+for cmd in "${REQUIRED_CMDS[@]}"; do
+	if ! command -v "$cmd" >/dev/null 2>&1; then
+		MISSING+=("$cmd")
+	fi
+done
+
+if [ "${#MISSING[@]}" -ne 0 ]; then
+	echo "❌ Missing dependencies:"
+	for cmd in "${MISSING[@]}"; do
+		echo "  - $cmd"
+	done
+	echo
+	echo "Install the missing dependencies using your package manager:"
+	echo
+	echo "Debian / Ubuntu:"
+	echo "	sudo apt update && sudo apt install -y ${MISSING[*]}"
+	echo
+	echo "Fedora:"
+	echo "	sudo dnf install ${MISSING[*]}"
+	echo
+	echo "Arch:"
+	echo "	sudo pacman -S ${MISSING[*]}"
+	echo
+	exit 1
+fi
+
+echo "✅ All dependencies found."
+
+# Create temporary directory and clean it up on exit
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+
+# Download required files before modifying the existing installation
+echo "ℹ️ Downloading installation files..."
+
+wget -q -O "$TMP_DIR/guitar-pro-8.desktop" \
+	"https://gp8.nikoboi.dev/guitar-pro-8.desktop"
+
+for script in startup reset reset-and-startup; do
+	wget -q -O "$TMP_DIR/$script" "https://gp8.nikoboi.dev/$script"
+done
+
+for size in 32x32 48x48 64x64 128x128 256x256; do
+	mkdir -p "$TMP_DIR/icons/$size/apps"
+
+	wget -q -O "$TMP_DIR/icons/$size/apps/guitar-pro-8.png" \
+		"https://gp8.nikoboi.dev/icons/hicolor/$size/apps/guitar-pro-8.png"
+done
+
+wget -q -O "$TMP_DIR/Guitar_Pro_8_icon.png" \
+	"https://gp8.nikoboi.dev/icons/Guitar_Pro_8_icon.png"
+
+# Preserve the existing installer, or download it if missing
+echo "ℹ️ Preserving or downloading the Guitar Pro 8 installer..."
+
+if [ -f "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" ]; then
+	cp -f "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" "$TMP_DIR/guitar-pro-8-setup.exe"
+else
+	wget -O "$TMP_DIR/guitar-pro-8-setup.exe" "https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe"
+fi
+
+# Recreate the Wine prefix
+echo "ℹ️ Recreating Wine prefix..."
+
+rm -rf "$HOME/Applications/Windows/Guitar-Pro-8"
+mkdir -p "$HOME/Applications/Windows/Guitar-Pro-8"
+
+cp -f "$TMP_DIR/guitar-pro-8-setup.exe" "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe"
+
+# Prepare desktop entries
+echo "ℹ️ Installing desktop entries..."
+
+mkdir -p "$HOME/Desktop" "$HOME/.local/share/applications"
+
+# Expand $HOME without modifying the downloaded source
+sed "s|\\\$HOME|$HOME|g" \
+	"$TMP_DIR/guitar-pro-8.desktop" \
+	>"$TMP_DIR/guitar-pro-8-installed.desktop"
+
+cp -f "$TMP_DIR/guitar-pro-8-installed.desktop" \
+	"$HOME/.local/share/applications/guitar-pro-8.desktop"
+chmod +x "$HOME/.local/share/applications/guitar-pro-8.desktop"
+
+cp -f "$TMP_DIR/guitar-pro-8-installed.desktop" \
+	"$HOME/Desktop/guitar-pro-8.desktop"
+chmod +x "$HOME/Desktop/guitar-pro-8.desktop"
+
+# Install startup scripts and icon
+echo "ℹ️ Installing startup scripts and application icon..."
+
+for script in startup reset reset-and-startup; do
+	cp -f "$TMP_DIR/$script" "$HOME/Applications/Windows/Guitar-Pro-8/$script"
+	chmod +x "$HOME/Applications/Windows/Guitar-Pro-8/$script"
+done
+
+cp -f "$TMP_DIR/Guitar_Pro_8_icon.png" "$HOME/Applications/Windows/Guitar-Pro-8/"
+
+# Install hicolor application icons
+echo "ℹ️ Installing application icons..."
+
+for size in 32x32 48x48 64x64 128x128 256x256; do
+	mkdir -p "$HOME/.local/share/icons/hicolor/$size/apps"
+
+	cp -f "$TMP_DIR/icons/$size/apps/guitar-pro-8.png" \
+		"$HOME/.local/share/icons/hicolor/$size/apps/guitar-pro-8.png"
+done
+
+gtk-update-icon-cache -f "$HOME/.local/share/icons/hicolor"
+
+# Initialize Wine prefix
+echo "ℹ️ Initializing Wine prefix..."
+
+WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" wineboot --init
+WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" winetricks -q win7 corefonts
+
+# Install Guitar Pro 8
+echo "ℹ️ Installing Guitar Pro 8..."
+
+if [ ! -f "$HOME/Applications/Windows/Guitar-Pro-8/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe" ]; then
+	WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" wine "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe"
+else
+	echo "Guitar Pro 8 is already installed. Skipping installer."
+fi
+
+# Remove broken Wine shortcuts
+echo "ℹ️ Removing broken Wine desktop entries..."
+
+rm -f "$HOME/Desktop/Guitar Pro 8.desktop"
+rm -f "$HOME/.local/share/applications/Guitar Pro 8.desktop"
+rm -rf "$HOME/.local/share/applications/wine/Programs/Arobas Music"
+
+echo
+echo "✅ Guitar Pro 8 setup finished!"
+echo
+echo "Launch Guitar Pro 8 via the Desktop icon or:"
+echo "$HOME/Applications/Windows/Guitar-Pro-8/startup"
+echo
+echo "⚠️ Cinnamon (and potentially other desktop environments) app menu entry may not work."
