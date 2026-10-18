@@ -1,26 +1,39 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-# Definitions
-NIKOB_DIR="$HOME/GitHub/NikoboiNFTB"
-REPO_DIR="$NIKOB_DIR/Guitar-Pro-On-Linux"
+echo "INFO: You are about to run the Beta install script."
+echo "It has significant improvements but is not as well tested."
+echo "See README.md for old installation instructions (not really recommended)"
+read -r -p "Continue (Y/n)? " response
 
-# Check that $HOME is setup properly.
-if [ -z "$HOME" ]; then
-	echo "HOME variable not set!"
+if [[ -n "$response" && ! "$response" =~ ^[Yy]$ ]]; then
+	echo "Installation cancelled."
+	exit 0
+fi
+
+echo
+
+# Check that $HOME is set
+if [ -z "${HOME:-}" ]; then
+	echo "❌ HOME is unset or empty!"
 	exit 1
 fi
 
+# Check dependencies
 REQUIRED_CMDS=(
-	bash
 	wget
 	wine
+	wineboot
 	winetricks
 	sed
 	cp
 	mkdir
-	git
+	chmod
+	rm
+	mv
+	mktemp
+	inkscape
 )
 
 MISSING=()
@@ -32,58 +45,163 @@ for cmd in "${REQUIRED_CMDS[@]}"; do
 done
 
 if [ "${#MISSING[@]}" -ne 0 ]; then
-	echo "❌ Missing required applications:"
+	echo "❌ Missing dependencies:"
 	for cmd in "${MISSING[@]}"; do
 		echo "  - $cmd"
 	done
 	echo
 
-	PKGS="${MISSING[*]}"
-
 	echo "Install the missing dependencies using your package manager:"
 	echo
-	echo "Debian / Ubuntu:"
-	echo "  sudo apt update && sudo apt install -y $PKGS"
-	echo
-	echo "Arch / Manjaro:"
-	echo "  sudo pacman -S $PKGS"
+
+	# Map command names to package names
+	declare -A PACKAGES=(
+		[convert]="imagemagick"
+	)
+
+	APT_PACKAGES=()
+	DFN_PACKAGES=()
+	PACMAN_PACKAGES=()
+
+	for cmd in "${MISSING[@]}"; do
+		package="${PACKAGES[$cmd]:-$cmd}"
+		APT_PACKAGES+=("$package")
+		DFN_PACKAGES+=("$package")
+		PACMAN_PACKAGES+=("$package")
+	done
+
+	echo "Debian / Ubuntu / Linux Mint:"
+	echo "	sudo apt update && sudo apt install ${APT_PACKAGES[*]}"
 	echo
 	echo "Fedora:"
-	echo "  sudo dnf install $PKGS"
+	echo "	sudo dnf install ${DFN_PACKAGES[*]}"
 	echo
-	echo "openSUSE:"
-	echo "  sudo zypper install $PKGS"
+	echo "Arch:"
+	echo "	sudo pacman -S ${PACMAN_PACKAGES[*]}"
 	echo
-	echo "After installing them, re-run this script."
+
 	exit 1
 fi
 
-echo "✅ All required applications are installed."
+echo "✅ All dependencies found."
 
-# Make and CD to my GitHub directory.
-mkdir -p "$NIKOB_DIR"
-cd "$NIKOB_DIR"
+# Create temporary directory and clean it up on exit
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
 
-# Clone the fork if it doesn't exist yet
-if [ ! -d "$REPO_DIR/.git" ]; then
-	echo "Cloning repository..."
-	git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux "$REPO_DIR"
+# Create a desktop entry
+create_desktop_entry() {
+	local desktop_file="$1"
+	local executable="$HOME/Applications/Windows/Guitar-Pro-8/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe"
+	local prefix="$HOME/Applications/Windows/Guitar-Pro-8"
+
+	{
+		echo "[Desktop Entry]"
+		echo "Type=Application"
+		echo "Name=Guitar Pro 8"
+		echo "Comment=Run Guitar Pro 8 under Wine."
+		echo "Terminal=false"
+		printf 'Exec=env WINEPREFIX="%s" wine "%s"\n' \
+			"$prefix" "$executable"
+		echo "Icon=guitar-pro-8"
+		echo "Categories=AudioVideo;Music;"
+	} >"$desktop_file"
+
+	chmod +x "$desktop_file"
+}
+
+# Download required files before modifying the existing installation
+echo "ℹ️ Downloading installation files..."
+
+for script in startup reset reset-and-startup; do
+	wget -q -O "$TMP_DIR/$script" "https://gp8.nikoboi.dev/$script"
+done
+
+# Preserve the existing installer, or download it if missing
+echo "ℹ️ Preserving or downloading the Guitar Pro 8 installer..."
+
+if [ -f "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" ]; then
+	cp -f \
+		"$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" \
+		"$TMP_DIR/guitar-pro-8-setup.exe"
 else
-	echo "Repository already exists, updating..."
-	cd "$REPO_DIR"
-	git pull
+	wget -O "$TMP_DIR/guitar-pro-8-setup.exe" \
+		"https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe"
 fi
 
-# Install icons
-mkdir -p "$HOME/.local/share/icons/hicolor"
-cp -r "$REPO_DIR/icons/hicolor/"* "$HOME/.local/share/icons/hicolor/"
+# Download the application icon before modifying the existing installation
+echo "ℹ️ Downloading application icon..."
 
-# Move into repo and run build
-cd "$REPO_DIR"
-bash build
+wget -q -O "$TMP_DIR/guitar-pro-8.svg" \
+	"https://www.guitar-pro.com/img/icons/favicon.svg"
+
+# Recreate Wine prefix
+echo "ℹ️ Recreating Wine prefix..."
+
+rm -rf "$HOME/Applications/Windows/Guitar-Pro-8"
+mkdir -p "$HOME/Applications/Windows/Guitar-Pro-8"
+
+cp -f "$TMP_DIR/guitar-pro-8-setup.exe" \
+	"$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe"
+
+# Initialize Wine prefix
+echo "ℹ️ Initializing Wine prefix..."
+
+WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" wineboot --init
+WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" winetricks -q win7 corefonts
+
+# Install Guitar Pro 8
+echo "ℹ️ Installing Guitar Pro 8..."
+
+WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" \
+	wine "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe"
+
+# Install startup scripts
+echo "ℹ️ Installing startup scripts..."
+
+for script in startup reset reset-and-startup; do
+	cp -f "$TMP_DIR/$script" \
+		"$HOME/Applications/Windows/Guitar-Pro-8/$script"
+	chmod +x "$HOME/Applications/Windows/Guitar-Pro-8/$script"
+done
+
+# Generate hicolor application icons
+echo "ℹ️ Generating application icons..."
+
+for size in 32 48 64 128 256; do
+	mkdir -p "$HOME/.local/share/icons/hicolor/${size}x${size}/apps"
+
+	inkscape "$TMP_DIR/guitar-pro-8.svg" \
+		--export-filename="$HOME/.local/share/icons/hicolor/${size}x${size}/apps/guitar-pro-8.png" \
+		--export-width="$size" \
+		--export-height="$size"
+done
+
+mkdir -p "$HOME/.local/share/icons/hicolor/scalable/apps"
+
+cp -f "$TMP_DIR/guitar-pro-8.svg" \
+	"$HOME/.local/share/icons/hicolor/scalable/apps/guitar-pro-8.svg"
+
+# Remove broken Wine shortcuts
+echo "ℹ️ Removing broken Wine desktop entries..."
+
+rm -f "$HOME/Desktop/Guitar Pro 8.desktop"
+rm -f "$HOME/.local/share/applications/Guitar Pro 8.desktop"
+rm -rf "$HOME/.local/share/applications/wine/Programs/Arobas Music"
+
+# Install desktop entries
+echo "ℹ️ Installing desktop entries..."
+
+mkdir -p "$HOME/Desktop" "$HOME/.local/share/applications"
+
+create_desktop_entry \
+	"$HOME/.local/share/applications/guitar-pro-8.desktop"
+
+create_desktop_entry \
+	"$HOME/Desktop/guitar-pro-8.desktop"
 
 echo
-echo "Installation complete!"
-echo "You can launch Guitar Pro 8 via the Desktop icon or:"
+echo "✅ Guitar Pro 8 setup finished!"
+echo
+echo "Launch Guitar Pro 8 via the Desktop icon or:"
 echo "$HOME/Applications/Windows/Guitar-Pro-8/startup"
-echo "WARNING: Cinnamon (and likely other DE) app menu entry does **not** work as of $(date)."
