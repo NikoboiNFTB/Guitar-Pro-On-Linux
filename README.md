@@ -1,12 +1,12 @@
+> [!NOTE]
+> This is a full rework of the forked repository. It only uses the core install functionality from it.
+
 # Guitar Pro 8 on Linux
 
-Install Guitar Pro 8 on Linux through Wine and Wineget.
+Install Guitar Pro on Linux.
 
-Note: This is a full rework of the forked repository. It only uses the core install functionality from it.
-
-Another note: This is built and tested for **Linux Mint / Cinnamon**. Other distros should work but are not officially supported or tested. Still, feel free to open up an issue for other distros as well.
-
-The [`/icons/`](/icons/) folder contains a few options for icons.
+> [!NOTE]
+> This is made for and tested on **Linux Mint / Cinnamon**. Other distros should work but are not officially supported or tested. Still, feel free to open up an issue for other distros as well.
 
 ## Usage
 
@@ -25,52 +25,15 @@ bash <(wget -qO- https://gp8.nikoboi.dev/install)
 > [!NOTE]
 > [gp8.nikoboi.dev](https://gp8.nikoboi.dev/) resolves to this repository.
 
-It will clone/update this repository locally, allowing for easy file copying.
-
-The [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/install) script runs the [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) script automatically, which actually builds the app.
-
-### Build
-
-As mentioned, the `build` script is automatically run by the `install` script. It can, however be run from a locally cloned copy of this repository:
-
-```bash
-mkdir -p ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
-git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
-cd ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
-bash build
-```
-
 ### Updating
 
-Running [`build`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/build) or the command above again will fully re-install Guitar Pro 8 from scratch and should update all included files from this repository.
+Running the install command again will fully re-install Guitar Pro 8 from scratch.
 
 ### Reset
 
 The [`reset`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset) script will wipe the registry and config files of the installation. This is useful if Guitar Pro 8 "breaks" (_wink_).
 
 This repo also includes a [`reset.bat`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/heads/main/reset.bat), for Windows users. Because Windows also tends to break a lot.
-
-## Bonus Tip
-
-You can set the desktop icon to run both the reset and the startup scripts. Simply change:
-
-```text
-Exec=$HOME/Applications/Windows/Guitar-Pro-8/startup
-```
-
-to:
-
-```text
-Exec=$HOME/Applications/Windows/Guitar-Pro-8/reset-and-startup
-```
-
-Note. It **cannot** literally say "$HOME", that does not work. Use your home directory. To find out what your home directory is, run:
-
-```bash
-echo "$HOME"
-```
-
-And use the output in place of `$HOME`. It also cannot use `~`. The setup script automatically sets `$HOME` to your home directory automatically.
 
 ## Contributing
 

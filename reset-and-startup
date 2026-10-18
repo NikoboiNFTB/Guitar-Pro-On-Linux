@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-"$HOME/Applications/Windows/Guitar-Pro-8/reset"
-"$HOME/Applications/Windows/Guitar-Pro-8/startup"
