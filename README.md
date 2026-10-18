@@ -1,18 +1,3 @@
-> [!NOTE]
-> Work is in progress to remove the need to clone this repo for installation, instead opting to just grab the needed files.
-
-> To use the installer the old way, clone this repo at commit **0dc9618**.
-
-```sh
-git clone https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
-cd ~/GitHub/NikoboiNFTB/Guitar-Pro-On-Linux
-git checkout 0dc9618
-```
-
-> **The paths must match exactly.** (This is why I am changing it.)
-
-> Then just run `install`
-
 # Guitar Pro 8 on Linux
 
 Install Guitar Pro 8 on Linux through Wine and Wineget.

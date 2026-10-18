@@ -2,8 +2,9 @@
 
 set -euo pipefail
 
-echo "⚠️ WARNING: You are about to run the Beta install script."
+echo "INFO: You are about to run the Beta install script."
 echo "It has significant improvements but is not as well tested."
+echo "See README.md for old installation instructions (not really recommended)"
 read -r -p "Continue (Y/n)? " response
 
 if [[ -n "$response" && ! "$response" =~ ^[Yy]$ ]]; then
