@@ -1,7 +1,12 @@
 [Desktop Entry]
+Encoding=UTF-8
 Type=Application
 Name=Guitar Pro 8
-Icon=guitar-pro-8
 Comment=Run Guitar Pro 8 under Wine.
-Categories=AudioVideo;Music;
+Version=1.0
 Terminal=false
+Exec=/usr/local/bin/krita
+Icon=guitar-pro-8
+Categories=AudioVideo;Music;
+
+# This file is note used.
