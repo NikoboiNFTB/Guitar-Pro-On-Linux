@@ -1,3 +1,6 @@
+> [!NOTE]
+> Work is in progress to remove the need to clone this repo for installation, instead opting to just grab the needed files one by one.
+
 # Guitar Pro 8 on Linux
 
 Install Guitar Pro 8 on Linux through Wine and Wineget.
