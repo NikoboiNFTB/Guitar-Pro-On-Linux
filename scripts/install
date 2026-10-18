@@ -2,6 +2,17 @@
 
 set -euo pipefail
 
+echo "⚠️ WARNING: You are about to run the Beta install script."
+echo "It has significant improvements but is not as well tested."
+read -r -p "Continue (Y/n)? " response
+
+if [[ -n "$response" && ! "$response" =~ ^[Yy]$ ]]; then
+	echo "Installation cancelled."
+	exit 0
+fi
+
+echo
+
 # Check that $HOME is set
 if [ -z "${HOME:-}" ]; then
 	echo "❌ HOME is unset or empty!"
@@ -21,7 +32,7 @@ REQUIRED_CMDS=(
 	rm
 	mv
 	mktemp
-	convert
+	inkscape
 )
 
 MISSING=()
@@ -82,22 +93,12 @@ create_desktop_entry() {
 	local desktop_file="$1"
 	local executable="$HOME/Applications/Windows/Guitar-Pro-8/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe"
 	local prefix="$HOME/Applications/Windows/Guitar-Pro-8"
-	local version=""
-
-	if command -v exiftool >/dev/null 2>&1; then
-		version="$(exiftool -s3 -ProductVersion "$executable" 2>/dev/null || true)"
-	fi
 
 	{
 		echo "[Desktop Entry]"
 		echo "Type=Application"
 		echo "Name=Guitar Pro 8"
 		echo "Comment=Run Guitar Pro 8 under Wine."
-
-		if [ -n "$version" ]; then
-			echo "X-App-Version=$version"
-		fi
-
 		echo "Terminal=false"
 		printf 'Exec=env WINEPREFIX="%s" wine "%s"\n' \
 			"$prefix" "$executable"
@@ -119,10 +120,19 @@ done
 echo "ℹ️ Preserving or downloading the Guitar Pro 8 installer..."
 
 if [ -f "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" ]; then
-	cp -f "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" "$TMP_DIR/guitar-pro-8-setup.exe"
+	cp -f \
+		"$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe" \
+		"$TMP_DIR/guitar-pro-8-setup.exe"
 else
-	wget -O "$TMP_DIR/guitar-pro-8-setup.exe" "https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe"
+	wget -O "$TMP_DIR/guitar-pro-8-setup.exe" \
+		"https://downloads.guitar-pro.com/gp8/stable/guitar-pro-8-setup.exe"
 fi
+
+# Download the application icon before modifying the existing installation
+echo "ℹ️ Downloading application icon..."
+
+wget -q -O "$TMP_DIR/guitar-pro-8.svg" \
+	"https://www.guitar-pro.com/img/icons/favicon.svg"
 
 # Recreate Wine prefix
 echo "ℹ️ Recreating Wine prefix..."
@@ -142,12 +152,34 @@ WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" winetricks -
 # Install Guitar Pro 8
 echo "ℹ️ Installing Guitar Pro 8..."
 
-if [ ! -f "$HOME/Applications/Windows/Guitar-Pro-8/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe" ]; then
-	WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" \
-		wine "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe"
-else
-	echo "Guitar Pro 8 is already installed. Skipping installer."
-fi
+WINEARCH=win64 WINEPREFIX="$HOME/Applications/Windows/Guitar-Pro-8" \
+	wine "$HOME/Applications/Windows/Guitar-Pro-8/guitar-pro-8-setup.exe"
+
+# Install startup scripts
+echo "ℹ️ Installing startup scripts..."
+
+for script in startup reset reset-and-startup; do
+	cp -f "$TMP_DIR/$script" \
+		"$HOME/Applications/Windows/Guitar-Pro-8/$script"
+	chmod +x "$HOME/Applications/Windows/Guitar-Pro-8/$script"
+done
+
+# Generate hicolor application icons
+echo "ℹ️ Generating application icons..."
+
+for size in 32 48 64 128 256; do
+	mkdir -p "$HOME/.local/share/icons/hicolor/${size}x${size}/apps"
+
+	inkscape "$TMP_DIR/guitar-pro-8.svg" \
+		--export-filename="$HOME/.local/share/icons/hicolor/${size}x${size}/apps/guitar-pro-8.png" \
+		--export-width="$size" \
+		--export-height="$size"
+done
+
+mkdir -p "$HOME/.local/share/icons/hicolor/scalable/apps"
+
+cp -f "$TMP_DIR/guitar-pro-8.svg" \
+	"$HOME/.local/share/icons/hicolor/scalable/apps/guitar-pro-8.svg"
 
 # Remove broken Wine shortcuts
 echo "ℹ️ Removing broken Wine desktop entries..."
@@ -166,34 +198,6 @@ create_desktop_entry \
 
 create_desktop_entry \
 	"$HOME/Desktop/guitar-pro-8.desktop"
-
-# Install startup scripts
-echo "ℹ️ Installing startup scripts..."
-
-for script in startup reset reset-and-startup; do
-	cp -f "$TMP_DIR/$script" "$HOME/Applications/Windows/Guitar-Pro-8/$script"
-	chmod +x "$HOME/Applications/Windows/Guitar-Pro-8/$script"
-done
-
-# Generate hicolor application icons from Guitar Pro's own icon
-echo "ℹ️ Generating application icons..."
-
-WINDOWS_USER="${USER:-$(id -un)}"
-ICON_SOURCE="$HOME/Applications/Windows/Guitar-Pro-8/drive_c/users/$WINDOWS_USER/AppData/Roaming/Arobas Music/guitarpro8/icon.png"
-
-if [ ! -f "$ICON_SOURCE" ]; then
-	echo "❌ Guitar Pro 8's source icon was not found:"
-	echo "$ICON_SOURCE"
-	exit 1
-fi
-
-for size in 32 48 64 128 256; do
-	mkdir -p "$HOME/.local/share/icons/hicolor/${size}x${size}/apps"
-
-	convert "$ICON_SOURCE" \
-		-resize "${size}x${size}" \
-		"$HOME/.local/share/icons/hicolor/${size}x${size}/apps/guitar-pro-8.png"
-done
 
 echo
 echo "✅ Guitar Pro 8 setup finished!"

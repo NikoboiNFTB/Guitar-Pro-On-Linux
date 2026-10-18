@@ -34,7 +34,7 @@ Run the [`install`](https://github.com/NikoboiNFTB/Guitar-Pro-On-Linux/raw/refs/
 To install, run:
 
 ```bash
-bash <(wget -qO- https://gp8.nikoboi.dev/install)
+bash <(wget -qO- https://gp8.nikoboi.dev/scripts/install)
 ```
 
 > [!NOTE]
