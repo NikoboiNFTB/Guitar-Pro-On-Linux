@@ -1,0 +1,186 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ -z "${HOME:-}" ]; then
+	echo "HOME variable not set!"
+	exit 1
+fi
+
+PREFIX="$HOME/Applications/Windows/Guitar-Pro-8"
+
+DIRECTORIES=(
+	"$PREFIX/drive_c/Program Files/Arobas Music"
+	"$PREFIX/drive_c/users/$USER/AppData/Local/Arobas Music"
+	"$PREFIX/drive_c/users/$USER/AppData/Roaming/Arobas Music"
+)
+
+replace_file() {
+	local FILE="$1"
+	local DIR BASE TEMP
+
+	DIR="$(dirname -- "$FILE")"
+	BASE="$(basename -- "$FILE")"
+	TEMP="$(mktemp --tmpdir="$DIR" ".${BASE}.XXXXXX")"
+
+	if ! cp --preserve=all -- "$FILE" "$TEMP"; then
+		rm -f -- "$TEMP"
+		return 1
+	fi
+
+	# Ensure the replacement has a new inode and current timestamps.
+	touch -- "$TEMP"
+
+	# Remove the original before moving the replacement into place.
+	rm -- "$FILE"
+	mv -- "$TEMP" "$FILE"
+}
+
+replace_directory() {
+	local DIR="$1"
+	local PARENT BASE TEMP
+
+	PARENT="$(dirname -- "$DIR")"
+	BASE="$(basename -- "$DIR")"
+	TEMP="$(mktemp -d --tmpdir="$PARENT" ".${BASE}.XXXXXX")"
+
+	rmdir -- "$TEMP"
+
+	# Copy the directory tree to a new location.
+	if ! cp -a -- "$DIR" "$TEMP"; then
+		rm -rf -- "$TEMP"
+		return 1
+	fi
+
+	# Refresh timestamps throughout the copied tree.
+	while IFS= read -r -d '' PATH_ENTRY; do
+		touch -a -m -- "$PATH_ENTRY"
+	done < <(find "$TEMP" -depth -print0)
+
+	# Remove the original, then install the replacement.
+	rm -rf -- "$DIR"
+	mv -- "$TEMP" "$DIR"
+}
+
+for ROOT in "${DIRECTORIES[@]}"; do
+	if [ ! -d "$ROOT" ]; then
+		echo "Skipping missing directory: $ROOT"
+		continue
+	fi
+
+	echo "Processing: $ROOT"
+
+	# Replace regular files first.
+	while IFS= read -r -d '' FILE; do
+		echo "Replacing file: $FILE"
+		replace_file "$FILE"
+	done < <(find "$ROOT" -type f -print0)
+
+	# Replace nested directories from deepest to shallowest.
+	while IFS= read -r -d '' DIR; do
+		[ "$DIR" = "$ROOT" ] && continue
+		echo "Replacing directory: $DIR"
+		replace_directory "$DIR"
+	done < <(find "$ROOT" -depth -mindepth 1 -type d -print0)
+
+	# Replace the root directory itself.
+	echo "Replacing root directory: $ROOT"
+	replace_directory "$ROOT"
+done
+
+# Replace Wine registry files.
+REGISTRY_FILES=(
+	"$PREFIX/user.reg"
+	"$PREFIX/system.reg"
+	"$PREFIX/userdef.reg"
+)
+
+echo "Processing Wine registry files..."
+
+for FILE in "${REGISTRY_FILES[@]}"; do
+	if [ ! -f "$FILE" ]; then
+		echo "Skipping missing registry file: $FILE"
+		continue
+	fi
+
+	echo "Replacing registry file: $FILE"
+
+	DIR="$(dirname -- "$FILE")"
+	BASE="$(basename -- "$FILE")"
+	TEMP="$(mktemp --tmpdir="$DIR" ".${BASE}.XXXXXX")"
+
+	if ! cp --preserve=all -- "$FILE" "$TEMP"; then
+		rm -f -- "$TEMP"
+		exit 1
+	fi
+
+	touch -- "$TEMP"
+
+	# Replace the original with the new file.
+	rm -- "$FILE"
+	mv -- "$TEMP" "$FILE"
+done
+
+echo "Wine registry file replacements completed."
+
+# Update all Wine registry key timestamps.
+echo "Updating Wine registry timestamps..."
+
+python3 - "$PREFIX" <<'PY'
+import os
+import re
+import stat
+import sys
+import tempfile
+import time
+
+PREFIX = sys.argv[1]
+REGISTRY_FILES = [
+    os.path.join(PREFIX, name)
+    for name in ("system.reg", "user.reg", "userdef.reg")
+]
+
+FILETIME_EPOCH = 116444736000000000
+
+def current_filetime():
+    return FILETIME_EPOCH + time.time_ns() // 100
+
+pattern = re.compile(rb"(?m)^(#time=)[0-9a-fA-F]+$")
+
+for path in REGISTRY_FILES:
+    if not os.path.isfile(path):
+        print(f"Skipping missing registry file: {path}")
+        continue
+
+    with open(path, "rb") as f:
+        data = f.read()
+
+    updated, count = pattern.subn(
+        lambda match: match.group(1) + f"{current_filetime():016x}".encode(),
+        data,
+    )
+
+    if count == 0:
+        print(f"No timestamps found: {path}")
+        continue
+
+    directory = os.path.dirname(path)
+    mode = stat.S_IMODE(os.stat(path).st_mode)
+
+    fd, temp_path = tempfile.mkstemp(dir=directory)
+    try:
+        with os.fdopen(fd, "wb") as f:
+            f.write(updated)
+        os.chmod(temp_path, mode)
+        os.replace(temp_path, path)
+    except BaseException:
+        if os.path.exists(temp_path):
+            os.unlink(temp_path)
+        raise
+
+    print(f"Updated {count} timestamps: {path}")
+
+print("Wine registry timestamps updated.")
+PY
+
+echo "Done. File and directory replacements completed."
